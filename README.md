@@ -2,6 +2,12 @@
 
 ## App that displays current weather conditions based on user's location.
 
+## Screenshots
+<p align="middle">
+  <img src="https://user-images.githubusercontent.com/67511162/183927275-b849bb09-f66c-4c64-8580-37a97be3e83d.png" data-canonical-src="https://user-images.githubusercontent.com/67511162/183927275-b849bb09-f66c-4c64-8580-37a97be3e83d.png" width="20%" />
+  <img src="https://user-images.githubusercontent.com/67511162/183927264-bc0baa11-5cf0-4ca7-b586-596a8221d80c.png" data-canonical-src="https://user-images.githubusercontent.com/67511162/183927264-bc0baa11-5cf0-4ca7-b586-596a8221d80c.png" width="20%" />
+</p>
+
 ## Frameworks / APIs
 * UIKit
 * CoreLocation
