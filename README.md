@@ -9,6 +9,13 @@
 * JSONDecoder / Codable
 * XCTest
 
+## Prerequisites
+* Xcode
+* OpenWeatherMap API Key
+
+## Setup API Key
+Create an API key for your project (https://openweathermap.org/appid#use) and replace mock value in `WeatherRepository.Constants.appId` to your API key.
+
 ## Build & Run
 For the purpose of this challenge no third-party dependency was used, so CocoaPods wasn't needed. To run simply open `WeatherApp.xcodeproj`, select `WeatherApp` scheme, select an iOS device and click Start or `Cmd + R`.
 
