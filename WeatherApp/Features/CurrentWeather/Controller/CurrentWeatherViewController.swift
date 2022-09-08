@@ -10,6 +10,7 @@ import UIKit
 
 class CurrentWeatherViewController: UIViewController {
     // MARK: Subviews
+    private var showForecastButton: UIButton = UIButton()
     private var weatherView: CurrentWeatherView = CurrentWeatherView()
     private var errorLabel: UILabel = UILabel()
 
@@ -31,6 +32,11 @@ class CurrentWeatherViewController: UIViewController {
         setupBindings()
         viewModel.fetchWeather()
     }
+
+    @objc
+    private func showForecastTapped() {
+        viewModel.showForecast()
+    }
 }
 
 // MARK: Private setup methods
@@ -39,14 +45,21 @@ private extension CurrentWeatherViewController {
         view.backgroundColor = .black
         view.addSubview(weatherView)
         view.addSubview(errorLabel)
+        view.addSubview(showForecastButton)
+
+        showForecastButton.setTitle("Show Forecast", for: .normal)
+        showForecastButton.addTarget(self, action: #selector(showForecastTapped), for: .touchUpInside)
 
         weatherView.translatesAutoresizingMaskIntoConstraints = false
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        showForecastButton.translatesAutoresizingMaskIntoConstraints = false
         errorLabel.textColor = .systemRed
 
         NSLayoutConstraint.activate([
             weatherView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             weatherView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            showForecastButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            showForecastButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             errorLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])

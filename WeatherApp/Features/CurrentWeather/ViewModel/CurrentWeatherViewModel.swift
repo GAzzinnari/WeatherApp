@@ -14,6 +14,7 @@ protocol CurrentWeatherViewModel: AnyObject {
 
     // Actions
     func fetchWeather()
+    func showForecast()
 }
 
 class CurrentWeatherViewModelDefault: CurrentWeatherViewModel {
@@ -22,15 +23,20 @@ class CurrentWeatherViewModelDefault: CurrentWeatherViewModel {
     var onGetWeatherError: (String) -> Void = { _ in }
 
     // MARK: Properties / constants
+    private let coordinator: MainCoordinator
     private let latitude: Double
     private let longitude: Double
 
     // MARK: Dependencies
     private let weatherRepository: WeatherRepository
 
-    init(latitude: Double, longitude: Double, weatherRepository: WeatherRepository = WeatherRepositoryDefault()) {
+    init(latitude: Double,
+         longitude: Double,
+         coordinator: MainCoordinator,
+         weatherRepository: WeatherRepository = WeatherRepositoryDefault()) {
         self.latitude = latitude
         self.longitude = longitude
+        self.coordinator = coordinator
         self.weatherRepository = weatherRepository
     }
 
@@ -46,6 +52,10 @@ class CurrentWeatherViewModelDefault: CurrentWeatherViewModel {
                 self.handleGetWeatherError()
             }
         }
+    }
+
+    func showForecast() {
+        coordinator.showForecast(latitude: latitude, longitude: longitude)
     }
 }
 

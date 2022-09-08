@@ -26,7 +26,7 @@ class MainCoordinator {
     }
 
     func showCurrentWeather(latitude: Double, longitude: Double) {
-        let viewModel = CurrentWeatherViewModelDefault(latitude: latitude, longitude: longitude)
+        let viewModel = CurrentWeatherViewModelDefault(latitude: latitude, longitude: longitude, coordinator: self)
         let controller = CurrentWeatherViewController(viewModel: viewModel)
         if let previous = navigation?.viewControllers.first?.view {
             UIView.transition(from: previous,
@@ -37,5 +37,11 @@ class MainCoordinator {
                 self.navigation?.viewControllers = [controller]
             })
         }
+    }
+
+    func showForecast(latitude: Double, longitude: Double) {
+        let viewModel = WeatherForecastViewModel(latitude: latitude, longitude: longitude)
+        let controller = WeatherForecastViewController(viewModel: viewModel)
+        navigation?.pushViewController(controller, animated: true)
     }
 }

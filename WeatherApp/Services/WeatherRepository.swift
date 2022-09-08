@@ -9,6 +9,7 @@ import Foundation
 
 protocol WeatherRepository {
     func getCurrentWeather(latitude: Double, longitude: Double, completion: @escaping (Result<WeatherData, Error>) -> Void)
+    func getWeatherForecast(latitude: Double, longitude: Double, completion: @escaping (Result<ForecastDTO, Error>) -> Void)
 }
 
 class WeatherRepositoryDefault: WeatherRepository {
@@ -20,11 +21,22 @@ class WeatherRepositoryDefault: WeatherRepository {
     }
 
     func getCurrentWeather(latitude: Double, longitude: Double, completion: @escaping (Result<WeatherData, Error>) -> Void) {
-        let url = Constants.baseURL
+        let url = Constants.baseURL + Constants.weatherPath
         let queryParams = buildGetWeatherParams(latitude: latitude, longitude: longitude)
         networkHelper.get(url: url,
                           queryParams: queryParams,
                           responseType: WeatherData.self,
+                          completion: { result in
+            completion(result.mapError { $0 as Error })
+        })
+    }
+
+    func getWeatherForecast(latitude: Double, longitude: Double, completion: @escaping (Result<ForecastDTO, Error>) -> Void) {
+        let url = Constants.baseURL + Constants.forecastPath
+        let queryParams = buildGetWeatherParams(latitude: latitude, longitude: longitude)
+        networkHelper.get(url: url,
+                          queryParams: queryParams,
+                          responseType: ForecastDTO.self,
                           completion: { result in
             completion(result.mapError { $0 as Error })
         })
@@ -51,8 +63,10 @@ private extension WeatherRepositoryDefault {
     // This constants could be extracted to plist / xcconfig files and fetched by means of another object,
     // that'd enable different environments to be ran, better secrets management, etc.
     private enum Constants {
-        static let baseURL = "https://api.openweathermap.org/data/2.5/weather"
-        static let appId = "ADD-WORKING-APP-ID-HERE"
+        static let baseURL = "https://api.openweathermap.org/data/2.5"
+        static let forecastPath = "/forecast"
+        static let weatherPath = "/weather"
+        static let appId = "REPLACE-WITH-REAL"
         static let units = "imperial"
     }
 }

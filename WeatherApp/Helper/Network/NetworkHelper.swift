@@ -35,12 +35,16 @@ class NetworkHelperDefault: NetworkHelper {
                 completion(.failure(.errorStatus))
                 return
             }
-            guard let data = data,
-                  let result = try? self.parseResponseBody(data: data, responseType: responseType) else {
-                completion(.failure(.decodingError))
+            guard let data = data else {
                 return
             }
-            completion(.success(result))
+            do {
+                let result = try self.parseResponseBody(data: data, responseType: responseType)
+                completion(.success(result))
+            } catch {
+                print(error)
+                completion(.failure(.decodingError))
+            }
         }
         task.resume()
     }
